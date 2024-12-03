@@ -3,7 +3,7 @@ FROM alpine:latest
 
 # Installiere rtl-sdr und ermittle die Version
 RUN apk add --no-cache rtl-sdr && \
-    ver=$(apk info -e rtl-sdr | awk -F"-" '{print $2}') && \
+    ver=$(apk version rtl-sdr|grep rtl-sdr|awk -F' = ' '{print $2}') && \
     echo $ver > /version.txt
 
 # Exponiere Port für rtl_tcp
