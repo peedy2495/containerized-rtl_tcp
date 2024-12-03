@@ -55,3 +55,20 @@ jobs:
           ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest
           ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:${{ env.version }}
         platforms: linux/amd64,linux/arm64,linux/arm/v7
+
+    - name: Add Multiple Annotations to Multi-Arch Manifest
+      run: |
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp
+        VERSION=latest
+        
+        # Create a multi-arch-manifest
+        docker manifest create $IMAGE_NAME:$VERSION \
+          $IMAGE_NAME:linux/amd64 $IMAGE_NAME:linux/arm64
+        
+        # Add multiple annotations
+        docker manifest annotate $IMAGE_NAME:$VERSION $IMAGE_NAME:linux/amd64 --arch amd64 --os linux --variant x86_64 --annotation "rtl_tcp version ${{ env.version }}" --annotation "build_type=release"
+        docker manifest annotate $IMAGE_NAME:$VERSION $IMAGE_NAME:linux/arm64 --arch arm64 --os linux --variant aarch64 --annotation "rtl_tcp version ${{ env.version }}" --annotation "build_type=release"
+        docker manifest annotate $IMAGE_NAME:$VERSION $IMAGE_NAME:linux/arm/v7 --arch arm --os linux --variant v7 --annotation "rtl_tcp version ${{ env.version }}" --annotation "build_type=release"
+        
+        # 7. Push the manifest with annotations to GHCR
+        docker manifest push $IMAGE_NAME:$VERSION
