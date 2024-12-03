@@ -40,7 +40,7 @@ jobs:
     - name: Build Docker Image
       id: build_image
       run: |
-        docker build -t ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest --annotation "foo=bar".
+        docker build -t ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest .
         version=$(docker run --rm ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest cat /version.txt)
         echo "Image version: $version"
         echo "version=$version" >> $GITHUB_ENV
