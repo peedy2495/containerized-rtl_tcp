@@ -10,4 +10,4 @@ RUN apk add --no-cache rtl-sdr && \
 EXPOSE 1234
 
 # Startbefehl für rtl_tcp
-CMD ["rtl_tcp", "-a", "0.0.0.0", "-p", "1234"]
+CMD ["rtl_tcp", "-n", "10", "-a", "0.0.0.0", "-p", "1234"]
