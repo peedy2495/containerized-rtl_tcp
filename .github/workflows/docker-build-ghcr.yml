@@ -41,7 +41,7 @@ jobs:
       id: build_image
       run: |
         docker build -t ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest .
-        version=$(docker run --rm ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest --entrypoint cat /version.txt)
+        version=$(docker run --rm --entrypoint "/usr/bin/cat /version.txt" ghcr.io/${{ github.repository_owner }}/containerized-rtl_tcp:latest)
         echo "Image version: $version"
         echo "version=$version" >> $GITHUB_ENV
 
