@@ -9,5 +9,5 @@ RUN apk add --no-cache rtl-sdr && \
 # Exponiere Port für rtl_tcp
 EXPOSE 1234
 
-# Startbefehl für rtl_tcp
-CMD ["rtl_tcp", "-n", "10", "-a", "0.0.0.0", "-p", "1234"]
+# Starte rtl_tcp
+ENTRYPOINT ["/entrypoint.sh"]
